@@ -1,0 +1,103 @@
+<!doctype html><html lang="es" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>goggle</title><link rel="stylesheet" href="app/frontend/styles.css"><link rel="stylesheet" href="static.css"></head><body><div class="goggle" data-mode="home" data-view="buscar">
+
+  <header class="top">
+    <nav class="nav" aria-label="Vistas">
+      <a href="#" data-view-link="buscar" data-label="Buscar" aria-current="page">Buscar</a>
+      <a href="#" data-view-link="comparar" data-label="Comparar">Comparar</a>
+      <a href="#" data-view-link="metricas" data-label="Métricas">Métricas</a>
+    </nav>
+  </header>
+
+  <div class="goggle-main">
+    <section class="home" aria-label="Inicio">
+      <a class="logo first" href="#" aria-label="goggle, inicio" data-logo></a>
+      <div class="slot" data-slot="home"></div>
+      <div class="examples" aria-label="Ejemplos">
+        <button class="example" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span>What is a mutual fund?</span></button>
+        <button class="example" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span>How do I build wealth?</span></button>
+        <button class="example" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg><span>Is a car loan bad debt?</span></button>
+      </div>
+    </section>
+
+    <div class="results-head">
+      <a class="logo" href="#" aria-label="goggle, inicio" data-logo data-home></a>
+      <div class="slot" data-slot="results"></div>
+      <!-- Comparar sin consulta: los ejemplos del inicio se mueven aquí (app.js, placeExamples). -->
+      <div class="cmp-start" data-cmp-start></div>
+      <!-- Solo para lectores de pantalla, hasta que llega la vista estática (su CSS la oculta). -->
+      <p class="cmp-pending sr-only" role="status">Buscando con los cuatro modelos…</p>
+    </div>
+
+    <div class="bar" role="search">
+      <span class="bar-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+      </span>
+      <label class="sr-only" for="goggle-q">Consulta</label>
+      <span class="ghost" aria-hidden="true"></span>
+      <textarea id="goggle-q" rows="1" autocomplete="off" spellcheck="false" maxlength="300"
+             placeholder="How to maximise savings?"
+             role="combobox" aria-autocomplete="both" aria-expanded="false" aria-controls="goggle-suggest"
+             aria-describedby="goggle-ghost-hint"></textarea>
+      <span id="goggle-ghost-hint" class="sr-only">Tab o flecha derecha aceptan la sugerencia en gris.</span>
+      <button class="grow" type="button" aria-label="Ver la consulta completa" aria-expanded="false" aria-controls="goggle-q" hidden>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <button class="clear" type="button" aria-label="Borrar" hidden>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+      <button class="chip" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="goggle-menu">
+        <span data-model-name>BM25</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
+      </button>
+      <span class="progress" aria-hidden="true"></span>
+
+      <ul class="suggest" id="goggle-suggest" role="listbox" aria-label="Sugerencias" hidden></ul>
+
+      <div class="menu" id="goggle-menu" role="menu" aria-label="Modelo y ajustes" hidden>
+        <div class="cantidad-resultados">
+          <span class="cantidad-etiqueta">Resultados</span>
+          <input id="cantidad-resultados" type="range" min="0" max="3" step="1" value="1" aria-label="Número de resultados">
+          <output data-cantidad-output for="cantidad-resultados">10</output>
+        </div>
+        <p class="menu-label">Modelo</p>
+        <div role="group" data-models></div>
+      </div>
+    </div>
+
+    <section class="results" aria-label="Resultados">
+      <div class="results-main">
+        <p class="dym" hidden>Quizás quisiste decir: <button type="button" data-dym></button></p>
+        <p class="status num" role="status" aria-live="polite"></p>
+        <ol class="list"></ol>
+      </div>
+      <aside class="graph" aria-label="Grafo 3D de la consulta" hidden>
+        <div class="graph-head">
+          <h2 class="graph-title">Vista 3D de <span data-graph-model>BM25</span></h2>
+          <ul class="graph-legend" aria-label="Leyenda">
+            <li><i class="lg-query"></i>Consulta</li>
+            <li><i class="lg-shown"></i><span data-legend-shown>Tu lista</span></li>
+            <li data-legend-context><i class="lg-context"></i><span data-legend-range>Puestos</span></li>
+          </ul>
+        </div>
+        <div class="graph-stage">
+          <canvas tabindex="0" role="img"></canvas>
+          <span class="graph-feedback" aria-live="polite" aria-atomic="true"></span>
+          <div class="graph-controls" role="toolbar" aria-label="Controles del grafo">
+            <div class="ctl-group">
+              <button type="button" data-graph-zoom="in" aria-label="Acercar" data-tip="Acercar (también con la rueda del ratón)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg></button>
+              <button type="button" data-graph-zoom="out" aria-label="Alejar" data-tip="Alejar"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10h11"/></svg></button>
+            </div>
+            <div class="ctl-group">
+              <button type="button" data-graph-pan aria-pressed="false" aria-label="Mover" data-tip="Mover: arrastra para desplazar el mapa (también Mayús + arrastrar o clic derecho)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5v15M2.5 10h15M10 2.5 7.8 4.7M10 2.5l2.2 2.2M10 17.5l-2.2-2.2M10 17.5l2.2-2.2M2.5 10l2.2-2.2M2.5 10l2.2 2.2M17.5 10l-2.2-2.2M17.5 10l-2.2 2.2"/></svg></button>
+              <button type="button" data-graph-spin aria-pressed="true" aria-label="Girar solo" data-tip="Girar solo: el mapa rota despacio. Al manejarlo se detiene y vuelve a girar unos segundos después"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10a6 6 0 1 1-1.8-4.3"/><path d="M14.6 2.8v3.3h-3.3"/></svg></button>
+              <button type="button" data-graph-reset aria-label="Recentrar" data-tip="Recentrar: vuelve a la vista inicial"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="5"/><circle cx="10" cy="10" r="1.2"/><path d="M10 2v3M10 15v3M2 10h3M15 10h3"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <p class="graph-error" hidden></p>
+      </aside>
+    </section>
+  </div>
+  <div id="goggle-tip" class="tooltip" role="tooltip" hidden></div>
+</div>
+<div id="demo-extras" aria-live="polite"></div><script type="module" src="static-adapter.js"></script></body></html>
